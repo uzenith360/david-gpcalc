@@ -1,0 +1,74 @@
+<div class="container w-1/2 mx-auto my-6 p-8 bg-gray-100 rounded-2xl">
+    <h1 class="text-xl font-semibold text-center">David CGPA Calculator</h1>
+    <form class="py-4">
+        <p [hidden]="!formMessage">{{formMessage|titlecase}}</p>
+        <div class="mt-2">
+            <input type="file" (change)="handleFilesUpload($event)" accept=".xlsx, .xls" multiple
+                [formControl]="coursesFormControl">
+        </div>
+    </form>
+
+    <!-- Always make sure the table displays, dont use *ngIf -->
+    <div [hidden]="!dataSource?.data?.length">
+        <mat-form-field>
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+        </mat-form-field>
+    
+        <div class="mat-elevation-z1">
+            <table mat-table [dataSource]="dataSource" matSort>
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                </ng-container>
+    
+                <!-- Name Column -->
+                <ng-container matColumnDef="matric_number">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Matric Number </th>
+                    <td mat-cell *matCellDef="let row"> {{row.matric_number}} </td>
+                </ng-container>
+    
+                <!-- Progress Column -->
+                <ng-container matColumnDef="total_score">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Score </th>
+                    <td mat-cell *matCellDef="let row"> {{row.total_score}} </td>
+                </ng-container>
+    
+                <!-- Fruit Column -->
+                <ng-container matColumnDef="total_units">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Units </th>
+                    <td mat-cell *matCellDef="let row"> {{row.total_units}} </td>
+                </ng-container>
+    
+                <!-- Fruit Column -->
+                <ng-container matColumnDef="cgpa">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> CGPA </th>
+                    <td mat-cell *matCellDef="let row"> {{row.cgpa}} </td>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+    
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+        <div class="mt-4" [hidden]="!courses">
+            <h4 class="text-lg">Courses</h4>
+            <ul role="list">
+                <li *ngFor="let course of courses">{{course | titlecase}}</li>
+              </ul>
+              
+        </div>
+        <div class="mt-4">
+            <button (click)="downloadResults()" mat-raised-button class="float-right" color="primary">Download <mat-icon>download</mat-icon>
+            </button>
+            <div class="clear-both"></div>
+        </div>
+    </div>
+</div>
