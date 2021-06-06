@@ -105,7 +105,7 @@ export class MainComponent implements OnInit, AfterViewInit {
         cgpaResults.push({
           matric_number: matricNumber,
           id: idCount += 1,
-          cgpa: Number(cgpa.totalScore / cgpa.totalUnits).toPrecision(2),
+          cgpa: Number(cgpa.totalScore / cgpa.totalUnits).toFixed(2),
           total_score: cgpa.totalScore,
           total_units: cgpa.totalUnits,
         });
