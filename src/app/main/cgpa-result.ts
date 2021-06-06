@@ -3,5 +3,5 @@ export interface CgpaResult {
   matric_number: string;
   total_score: number;
   total_units: number;
-  cgpa: number;
+  cgpa: string;
 }
